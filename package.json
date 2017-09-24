@@ -1,0 +1,33 @@
+{
+  "name": "si-reason",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottcheng/si-reason.git"
+  },
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack -w"
+  },
+  "author": "Scott Cheng <me@scottcheng.com> (http://scottcheng.com/)",
+  "bugs": {
+    "url": "https://github.com/scottcheng/si-reason/issues"
+  },
+  "homepage": "https://github.com/scottcheng/si-reason#readme",
+  "main": "index.js",
+  "keywords": [],
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "reason-react": ">=0.2.1"
+  },
+  "devDependencies": {
+    "bs-platform": "^1.9.2",
+    "webpack": "^1.14.0"
+  }
+}

@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId <Root /> "root";
+ReactDOMRe.renderToElementWithId <Si /> "root";

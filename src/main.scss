@@ -1,0 +1,25 @@
+@import "./icons";
+
+$color-base: #f8f8f8;
+$color-column: #e0e0e0;
+$color-column-cap: #eee;
+$color-column-hover: #92e2b0;
+$color-column-cap-hover: #d6f0e0;
+
+$color-bead-1: #ff9c38;
+$color-bead-2: #4296f5;
+
+$gray-dark: #555;
+$gray: #888;
+$gray-light: #aaa;
+$yellow: #ffd61f;
+$yellow-dark: #f5d000;
+
+body {
+  margin: 0;
+  font-family: Titillium;
+  font-size: 16px;
+  color: $gray-dark;
+}
+
+@import "./components/sidebar";

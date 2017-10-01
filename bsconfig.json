@@ -10,7 +10,7 @@
   "sources": [
     {
       "dir": "src",
-      "subdirs": []
+      "subdirs": ["components"]
     }
   ],
   "namespace": true,

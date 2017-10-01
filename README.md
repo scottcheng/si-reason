@@ -9,8 +9,7 @@ To build and run this project:
 ```
 npm install
 npm start
-# in another tab
-npm run webpack
-```
 
-Then open `public/index.html` in browser.
+# In another tab
+cd public && http-server
+```

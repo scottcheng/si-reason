@@ -1,0 +1,44 @@
+.Sidebar {
+  position: fixed;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.Sidebar-title {
+  font-size: 36px;
+}
+
+.Sidebar-section {
+  margin-top: 60px;
+}
+
+.Sidebar-subSection {
+  margin-top: 15px;
+}
+
+.Sidebar-rotateBtn {
+  display: inline-block;
+  color: $gray;
+  cursor: pointer;
+  padding: 5px;
+  margin: -5px 15px -5px -5px;
+  transition: color .25s;
+  &:hover {
+    color: $gray-dark;
+  }
+}
+
+.Sidebar-info {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.Sidebar-link {
+  cursor: pointer;
+  color: $gray-light;
+  transition: color .25s;
+  &:hover {
+    color: $gray-dark;
+  }
+}

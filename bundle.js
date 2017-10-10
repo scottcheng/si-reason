@@ -29519,10 +29519,6 @@
 	var ReasonReact   = __webpack_require__(186);
 	var Game$SiReason = __webpack_require__(205);
 
-	function se(prim) {
-	  return prim;
-	}
-
 	var component = ReasonReact.statelessComponent("Si");
 
 	function make() {
@@ -29535,7 +29531,6 @@
 	  return newrecord;
 	}
 
-	exports.se        = se;
 	exports.component = component;
 	exports.make      = make;
 	/* component Not a pure module */
@@ -29551,47 +29546,57 @@
 	var Block            = __webpack_require__(190);
 	var Curry            = __webpack_require__(188);
 	var React            = __webpack_require__(202);
-	var Caml_array       = __webpack_require__(184);
 	var ReasonReact      = __webpack_require__(186);
 	var Board$SiReason   = __webpack_require__(206);
-	var Const$SiReason   = __webpack_require__(209);
-	var Sidebar$SiReason = __webpack_require__(212);
-
-	function se(prim) {
-	  return prim;
-	}
+	var Engine$SiReason  = __webpack_require__(212);
+	var Sidebar$SiReason = __webpack_require__(214);
 
 	var component = ReasonReact.reducerComponent("Game");
 
 	function make() {
 	  var newrecord = component.slice();
 	  newrecord[/* render */9] = (function (param) {
+	      var state = param[/* state */4];
 	      var reduce = param[/* reduce */3];
 	      return React.createElement("div", {
 	                  className: "Game"
 	                }, ReasonReact.element(/* None */0, /* None */0, Sidebar$SiReason.make(Curry._1(reduce, (function () {
-	                                return /* Rotate */[90];
+	                                return /* Rotate */Block.__(0, [-90]);
 	                              })), Curry._1(reduce, (function () {
-	                                return /* Rotate */[-90];
+	                                return /* Rotate */Block.__(0, [90]);
 	                              })), Curry._1(reduce, (function () {
 	                                return /* Reset */0;
-	                              })), /* array */[])), ReasonReact.element(/* None */0, /* None */0, Board$SiReason.make(param[/* state */4][/* rotation */0], /* array */[])));
+	                              })), /* array */[])), ReasonReact.element(/* None */0, /* None */0, Board$SiReason.make(state[/* rotation */0], state[/* gameState */1], Curry._1(reduce, (function (param) {
+	                                return /* Move */Block.__(1, [/* tuple */[
+	                                            param[0],
+	                                            param[1]
+	                                          ]]);
+	                              })), /* array */[])));
 	    });
 	  newrecord[/* initialState */10] = (function () {
 	      return /* record */[
 	              /* rotation */0,
-	              /* gameState */Caml_array.caml_make_vect(Const$SiReason.numRows, Caml_array.caml_make_vect(Const$SiReason.numRows, Caml_array.caml_make_vect(Const$SiReason.numRows, /* Empty */2)))
+	              /* gameState */Engine$SiReason.emptyState
 	            ];
 	    });
 	  newrecord[/* reducer */12] = (function (action, state) {
-	      if (action) {
+	      if (typeof action === "number") {
 	        return /* Update */Block.__(0, [/* record */[
-	                    /* rotation */state[/* rotation */0] + action[0] | 0,
+	                    /* rotation */0,
 	                    /* gameState */state[/* gameState */1]
+	                  ]]);
+	      } else if (action.tag) {
+	        var match = action[0];
+	        return /* Update */Block.__(0, [/* record */[
+	                    /* rotation */state[/* rotation */0],
+	                    /* gameState */Engine$SiReason.move(/* tuple */[
+	                          match[0],
+	                          match[1]
+	                        ], /* P1 */0, state[/* gameState */1])
 	                  ]]);
 	      } else {
 	        return /* Update */Block.__(0, [/* record */[
-	                    /* rotation */0,
+	                    /* rotation */state[/* rotation */0] + action[0] | 0,
 	                    /* gameState */state[/* gameState */1]
 	                  ]]);
 	      }
@@ -29599,7 +29604,6 @@
 	  return newrecord;
 	}
 
-	exports.se        = se;
 	exports.component = component;
 	exports.make      = make;
 	/* component Not a pure module */
@@ -29622,11 +29626,7 @@
 	var ReasonReact        = __webpack_require__(186);
 	var Const$SiReason     = __webpack_require__(209);
 	var Column$SiReason    = __webpack_require__(210);
-	var BoardBase$SiReason = __webpack_require__(211);
-
-	function se(prim) {
-	  return prim;
-	}
+	var BoardBase$SiReason = __webpack_require__(213);
 
 	function columnKey(i, j) {
 	  return "" + (String(i) + ("-" + (String(j) + "")));
@@ -29643,7 +29643,7 @@
 
 	var component = ReasonReact.reducerComponent("Board");
 
-	function make(rotation, _) {
+	function make(rotation, gameState, move, _) {
 	  var newrecord = component.slice();
 	  newrecord[/* didMount */4] = (function (param) {
 	      var reduce = param[/* reduce */3];
@@ -29670,27 +29670,31 @@
 	                                        style: {
 	                                          transform: columnBaseTransform(Caml_array.caml_array_get(Caml_array.caml_array_get(columnPositions, i), j))
 	                                        }
-	                                      }, ReasonReact.element(/* None */0, /* None */0, Column$SiReason.make(i, j, /* array */[])));
+	                                      }, ReasonReact.element(/* None */0, /* None */0, Column$SiReason.make(i, j, gameState, (function () {
+	                                                  return Curry._1(move, /* tuple */[
+	                                                              i,
+	                                                              j
+	                                                            ]);
+	                                                }), /* array */[])));
 	                          }), Const$SiReason.ijList)));
 	    });
 	  newrecord[/* initialState */10] = (function () {
 	      return /* record */[/* columnPositions */emptyColumnPositions];
 	    });
 	  newrecord[/* reducer */12] = (function (_, _$1) {
-	      return /* Update */Block.__(0, [/* record */[/* columnPositions */$$Array.mapi((function (i, arr) {
+	      return /* Update */Block.__(0, [/* record */[/* columnPositions */$$Array.mapi((function (i, row) {
 	                          return $$Array.mapi((function (j, _) {
 	                                        var rect = document.getElementById(BoardBase$SiReason.markerId(i, j)).getBoundingClientRect();
 	                                        return /* tuple */[
 	                                                rect.left,
 	                                                rect.top
 	                                              ];
-	                                      }), arr);
+	                                      }), row);
 	                        }), emptyColumnPositions)]]);
 	    });
 	  return newrecord;
 	}
 
-	exports.se                   = se;
 	exports.columnKey            = columnKey;
 	exports.columnBaseTransform  = columnBaseTransform;
 	exports.emptyColumnPositions = emptyColumnPositions;
@@ -30257,27 +30261,41 @@
 	// Generated by BUCKLESCRIPT VERSION 1.9.2, PLEASE EDIT WITH CARE
 	'use strict';
 
-	var React       = __webpack_require__(202);
-	var Pervasives  = __webpack_require__(191);
-	var ReasonReact = __webpack_require__(186);
-
-	function se(prim) {
-	  return prim;
-	}
+	var $$Array         = __webpack_require__(207);
+	var Curry           = __webpack_require__(188);
+	var React           = __webpack_require__(202);
+	var Caml_array      = __webpack_require__(184);
+	var Pervasives      = __webpack_require__(191);
+	var ReasonReact     = __webpack_require__(186);
+	var Bead$SiReason   = __webpack_require__(211);
+	var Engine$SiReason = __webpack_require__(212);
 
 	var component = ReasonReact.statelessComponent("Column");
 
-	function make(i, j, _) {
+	function make(i, j, gameState, move, _) {
 	  var newrecord = component.slice();
 	  newrecord[/* render */9] = (function () {
 	      return React.createElement("div", {
-	                  className: "Column"
-	                }, Pervasives.string_of_int(i) + ("-" + Pervasives.string_of_int(j)));
+	                  className: "Column",
+	                  onClick: (function () {
+	                      if (Engine$SiReason.isValidMove(/* tuple */[
+	                              i,
+	                              j
+	                            ], gameState)) {
+	                        return Curry._1(move, /* () */0);
+	                      } else {
+	                        return 0;
+	                      }
+	                    })
+	                }, $$Array.mapi((function (i, el) {
+	                        return ReasonReact.element(/* Some */[Pervasives.string_of_int(i)], /* None */0, Bead$SiReason.make(el, /* array */[]));
+	                      }), $$Array.map((function (layer) {
+	                            return Caml_array.caml_array_get(Caml_array.caml_array_get(layer, i), j);
+	                          }), gameState)));
 	    });
 	  return newrecord;
 	}
 
-	exports.se        = se;
 	exports.component = component;
 	exports.make      = make;
 	/* component Not a pure module */
@@ -30290,16 +30308,118 @@
 	// Generated by BUCKLESCRIPT VERSION 1.9.2, PLEASE EDIT WITH CARE
 	'use strict';
 
+	var React       = __webpack_require__(202);
+	var ReasonReact = __webpack_require__(186);
+
+	var component = ReasonReact.statelessComponent("Bead");
+
+	function make(el, _) {
+	  var newrecord = component.slice();
+	  newrecord[/* render */9] = (function () {
+	      switch (el) {
+	        case 0 : 
+	            return React.createElement("div", {
+	                        className: "Bead Bead-p1"
+	                      });
+	        case 1 : 
+	            return React.createElement("div", {
+	                        className: "Bead Bead-p2"
+	                      });
+	        case 2 : 
+	            return null;
+	        
+	      }
+	    });
+	  return newrecord;
+	}
+
+	exports.component = component;
+	exports.make      = make;
+	/* component Not a pure module */
+
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// Generated by BUCKLESCRIPT VERSION 1.9.2, PLEASE EDIT WITH CARE
+	'use strict';
+
+	var $$Array        = __webpack_require__(207);
+	var Caml_array     = __webpack_require__(184);
+	var Const$SiReason = __webpack_require__(209);
+
+	var emptyState = Caml_array.caml_make_vect(Const$SiReason.numRows, Caml_array.caml_make_vect(Const$SiReason.numRows, Caml_array.caml_make_vect(Const$SiReason.numRows, /* Empty */2)));
+
+	function isEnd() {
+	  return /* false */0;
+	}
+
+	function isValidMove(param, state) {
+	  return +(Caml_array.caml_array_get(Caml_array.caml_array_get(Caml_array.caml_array_get(state, Const$SiReason.numRows - 1 | 0), param[0]), param[1]) === /* Empty */2);
+	}
+
+	function move(param, el, state) {
+	  var j = param[1];
+	  var i = param[0];
+	  var match = isValidMove(/* tuple */[
+	        i,
+	        j
+	      ], state);
+	  if (match !== 0) {
+	    return $$Array.fold_left((function (param, layer) {
+	                    var hasPlaced = param[1];
+	                    var curState = param[0];
+	                    var match = 1 - hasPlaced && +(Caml_array.caml_array_get(Caml_array.caml_array_get(layer, i), j) === /* Empty */2);
+	                    if (match !== 0) {
+	                      return /* tuple */[
+	                              $$Array.append(curState, /* array */[$$Array.mapi((function (ii, row) {
+	                                            return $$Array.mapi((function (jj, curEl) {
+	                                                          var match = +(ii === i && jj === j);
+	                                                          if (match !== 0) {
+	                                                            return el;
+	                                                          } else {
+	                                                            return curEl;
+	                                                          }
+	                                                        }), row);
+	                                          }), layer)]),
+	                              /* true */1
+	                            ];
+	                    } else {
+	                      return /* tuple */[
+	                              $$Array.append(curState, /* array */[layer]),
+	                              hasPlaced
+	                            ];
+	                    }
+	                  }), /* tuple */[
+	                  /* array */[],
+	                  /* false */0
+	                ], state)[0];
+	  } else {
+	    return state;
+	  }
+	}
+
+	exports.emptyState  = emptyState;
+	exports.isEnd       = isEnd;
+	exports.isValidMove = isValidMove;
+	exports.move        = move;
+	/* Const-SiReason Not a pure module */
+
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// Generated by BUCKLESCRIPT VERSION 1.9.2, PLEASE EDIT WITH CARE
+	'use strict';
+
 	var List           = __webpack_require__(187);
 	var $$Array        = __webpack_require__(207);
 	var React          = __webpack_require__(202);
 	var Pervasives     = __webpack_require__(191);
 	var ReasonReact    = __webpack_require__(186);
 	var Const$SiReason = __webpack_require__(209);
-
-	function se(prim) {
-	  return prim;
-	}
 
 	var component = ReasonReact.statelessComponent("BoardBase");
 
@@ -30345,7 +30465,6 @@
 	  return newrecord;
 	}
 
-	exports.se            = se;
 	exports.component     = component;
 	exports.columnKey     = columnKey;
 	exports.markerId      = markerId;
@@ -30356,7 +30475,7 @@
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Generated by BUCKLESCRIPT VERSION 1.9.2, PLEASE EDIT WITH CARE

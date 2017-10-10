@@ -2,8 +2,6 @@ external requestAnimationFrame : (unit => unit) => unit = "" [@@bs.val];
 
 external getElementById : string => Dom.element = "document.getElementById" [@@bs.val];
 
-let se = ReasonReact.stringToElement;
-
 let columnKey i j => {j|$i-$j|j};
 
 let columnBaseTransform (x, y) =>
@@ -18,7 +16,7 @@ type actions =
 
 let component = ReasonReact.reducerComponent "Board";
 
-let make ::rotation _children => {
+let make ::rotation ::gameState ::move _children => {
   ...component,
   initialState: fun () => {columnPositions: emptyColumnPositions},
   reducer: fun action _ =>
@@ -28,8 +26,8 @@ let make ::rotation _children => {
         columnPositions:
           emptyColumnPositions |>
           Array.mapi (
-            fun i arr =>
-              arr |>
+            fun i row =>
+              row |>
               Array.mapi (
                 fun j _ => {
                   let rect =
@@ -63,7 +61,7 @@ let make ::rotation _children => {
                       ReactDOMRe.Style.make
                         transform::(columnBaseTransform columnPositions.(i).(j)) ()
                     )>
-              <Column i j />
+              <Column i j gameState move=(fun _ => move (i, j)) />
             </div>
         ) |> Array.of_list |> ReasonReact.arrayToElement
       )

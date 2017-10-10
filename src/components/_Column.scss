@@ -1,0 +1,49 @@
+$Column-width: 16px;
+$Column-height: $Bead-size * 4 + $Bead-gap * 3 + 5;
+$Column-capHeight: 5px;
+
+.Column {
+  position: absolute;
+  transform: rotate(180deg); // so beads go bottom up
+  left: (-$Column-width / 2);
+  bottom: 0;
+  height: $Column-height;
+  width: $Column-width;
+  padding: (-$Bead-gap) ($Column-width / 2) 0;
+  border-radius: #{$Column-width / 2} #{$Column-width / 2} 0 0 / #{$Column-capHeight};
+  background: #e0e0e0;
+  transition: background .25s;
+
+  &:hover {
+    background: #92e2b0;
+  }
+}
+
+// Shadow
+.Column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: #{$Column-width / 2} 0 0 0 / #{$Column-capHeight};
+  background: rgba(#000, .07);
+}
+
+// Cap
+.Column::after {
+  content: "";
+  position: absolute;
+  bottom: - $Column-capHeight;
+  left: 0;
+  width: 100%;
+  height: $Column-capHeight * 2;
+  border-radius: #{$Column-width / 2} / #{$Column-capHeight};
+  background: #eee;
+  transition: background .25s;
+
+  .Column:hover & {
+    background: #d6f0e0;
+  }
+}

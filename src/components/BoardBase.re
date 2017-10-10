@@ -1,5 +1,3 @@
-let se = ReasonReact.stringToElement;
-
 let component = ReasonReact.statelessComponent "BoardBase";
 
 let columnKey i j => {j|$i-$j|j};

@@ -15,6 +15,10 @@ $gray-light: #aaa;
 $yellow: #ffd61f;
 $yellow-dark: #f5d000;
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Titillium;
@@ -23,5 +27,7 @@ body {
 }
 
 @import "./components/Sidebar";
-@import "./components/Board";
 @import "./components/BoardBase";
+@import "./components/Bead";
+@import "./components/Column";
+@import "./components/Board";

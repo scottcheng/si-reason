@@ -1,0 +1,13 @@
+$Bead-size: 50px;
+$Bead-gap: -3px;
+
+.Bead {
+  position: relative;
+  width: $Bead-size;
+  height: $Bead-size;
+  left: -($Bead-size / 2);
+  margin-top: $Bead-gap;
+  border-radius: 50%;
+  background: #ff9c38; // TODO: p1/p2 color, winning bead color
+  opacity: .2;
+}

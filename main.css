@@ -1,0 +1,85 @@
+@font-face {
+  font-family: 'icon';
+  src: url("./icons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-user:before {
+  content: "\f007"; }
+
+.icon-close:before {
+  content: "\f00d"; }
+
+.icon-rotate-right:before {
+  content: "\f01e"; }
+
+.icon-rotate-left:before {
+  content: "\f0e2"; }
+
+body {
+  margin: 0;
+  font-family: Titillium;
+  font-size: 16px;
+  color: #555; }
+
+.Sidebar {
+  position: fixed;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.Sidebar-title {
+  font-size: 36px; }
+
+.Sidebar-section {
+  margin-top: 60px; }
+
+.Sidebar-subSection {
+  margin-top: 15px; }
+
+.Sidebar-rotateBtn {
+  display: inline-block;
+  color: #888;
+  cursor: pointer;
+  padding: 5px;
+  margin: -5px 15px -5px -5px;
+  transition: color .25s; }
+  .Sidebar-rotateBtn:hover {
+    color: #555; }
+
+.Sidebar-info {
+  font-size: 12px;
+  font-weight: 300; }
+
+.Sidebar-link {
+  cursor: pointer;
+  color: #aaa;
+  transition: color .25s; }
+  .Sidebar-link:hover {
+    color: #555; }
+
+.Board-columnContainer {
+  position: fixed;
+  top: 0;
+  left: 0; }
+
+.BoardBase {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  top: 60%;
+  left: 55%;
+  background: #f8f8f8;
+  transition: all .25s; }

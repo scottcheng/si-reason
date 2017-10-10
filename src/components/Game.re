@@ -1,7 +1,11 @@
 let se = ReasonReact.stringToElement;
 
-/* TODO: Write game state and move to a separate file */
-type gameState = string;
+type place =
+  | P1
+  | P2
+  | Empty;
+
+type gameState = array (array (array place));
 
 type state = {
   rotation: int, /* In degrees */
@@ -16,7 +20,11 @@ let component = ReasonReact.reducerComponent "Game";
 
 let make _children => {
   ...component,
-  initialState: fun () => {rotation: 0, gameState: ""},
+  initialState: fun () => {
+    rotation: 0,
+    gameState:
+      Empty |> Array.make Const.numRows |> Array.make Const.numRows |> Array.make Const.numRows
+  },
   reducer: fun action state =>
     switch action {
     | Rotate inc => ReasonReact.Update {...state, rotation: state.rotation + inc}

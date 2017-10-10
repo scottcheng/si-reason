@@ -22,4 +22,6 @@ body {
   color: $gray-dark;
 }
 
-@import "./components/sidebar";
+@import "./components/Sidebar";
+@import "./components/Board";
+@import "./components/BoardBase";

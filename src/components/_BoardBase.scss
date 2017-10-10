@@ -1,0 +1,9 @@
+.BoardBase {
+  position: fixed;
+  width: 500px; // TODO: use vmin
+  height: 500px;
+  top: 60%;
+  left: 55%;
+  background: #f8f8f8;
+  transition: all .25s;
+}

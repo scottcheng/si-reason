@@ -25,7 +25,9 @@ let make ::rotateClockwise ::rotateCounterClockwise ::reset _children => {
         <div className="Sidebar-subSection">
           <span className="Sidebar-link" onClick=reset> (se "New game") </span>
         </div>
-        <div className="Sidebar-subSection" > <span className="Sidebar-link"> (se "About") </span></div>
+        <div className="Sidebar-subSection">
+          <span className="Sidebar-link"> (se "About") </span>
+        </div>
       </div>
     </div>
 };

@@ -16,10 +16,10 @@ let make _children => {
   reducer: fun action state =>
     switch action {
     | Rotate inc => ReasonReact.Update {...state, rotation: state.rotation + inc}
-    | Reset => ReasonReact.Update {...state, rotation: 0}
-    | Move (i, j) =>
+    | Reset => ReasonReact.Update {...state, rotation: 0, gameState: Engine.emptyState}
+    | Move (x, y) =>
       /* TODO: pass in active player */
-      ReasonReact.Update {...state, gameState: Engine.move (i, j) P1 state.gameState}
+      ReasonReact.Update {...state, gameState: Engine.move (x, y) P1 state.gameState}
     },
   render: fun {state, reduce} =>
     <div className="Game">
@@ -31,7 +31,16 @@ let make _children => {
       <Board
         rotation=state.rotation
         gameState=state.gameState
-        move=(reduce (fun (i, j) => Move (i, j)))
+        move=(reduce (fun (x, y) => Move (x, y)))
       />
+      (
+        ReasonReact.stringToElement (
+          switch (Engine.winner state.gameState) {
+          | Some P1 => "winner is P1"
+          | Some P2 => "winner is P2"
+          | _ => "no winner"
+          }
+        )
+      )
     </div>
 };

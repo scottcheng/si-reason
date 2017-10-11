@@ -1,14 +1,16 @@
 let component = ReasonReact.statelessComponent "BoardBase";
 
-let columnKey i j => {j|$i-$j|j};
+let columnKey x y => {j|$x-$y|j};
 
-let markerId i j => {j|BoardBase-marker-$i-$j|j};
+let markerId x y => {j|BoardBase-marker-$x-$y|j};
 
-let position i =>
+let boardPadding = 0.125;
+
+let position x =>
   string_of_float (
     (
-      Const.boardPadding +.
-      (1.0 -. Const.boardPadding *. 2.0) /. float_of_int (Const.numRows - 1) *. float_of_int i
+      boardPadding +.
+      (1.0 -. boardPadding *. 2.0) /. float_of_int (Engine.numRows - 1) *. float_of_int x
     ) *. 100.0
   ) ^ "%";
 
@@ -23,16 +25,16 @@ let make ::rotation _children => {
     <div
       className="BoardBase" style=(ReactDOMRe.Style.make transform::(baseTransform rotation) ())>
       (
-        Const.ijList |>
+        Engine.ijList |>
         List.map (
-          fun (i, j) =>
+          fun (x, y) =>
             <div
               className="BoardBase-mark"
-              key=(columnKey i j)
-              id=(markerId i j)
+              key=(columnKey x y)
+              id=(markerId x y)
               style=(
                       ReactDOMRe.Style.make
-                        position::"absolute" top::(position i) left::(position j) ()
+                        position::"absolute" top::(position x) left::(position y) ()
                     )
             />
         ) |> Array.of_list |> ReasonReact.arrayToElement

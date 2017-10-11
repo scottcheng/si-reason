@@ -2,12 +2,12 @@ external requestAnimationFrame : (unit => unit) => unit = "" [@@bs.val];
 
 external getElementById : string => Dom.element = "document.getElementById" [@@bs.val];
 
-let columnKey i j => {j|$i-$j|j};
+let columnKey x y => {j|$x-$y|j};
 
 let columnBaseTransform (x, y) =>
   "translate(" ^ string_of_float x ^ "px, " ^ string_of_float y ^ "px)";
 
-let emptyColumnPositions = (0., 0.) |> Array.make_matrix Const.numRows Const.numRows;
+let emptyColumnPositions = (0., 0.) |> Array.make_matrix Engine.numRows Engine.numRows;
 
 type state = {columnPositions: array (array (float, float))};
 
@@ -26,12 +26,12 @@ let make ::rotation ::gameState ::move _children => {
         columnPositions:
           emptyColumnPositions |>
           Array.mapi (
-            fun i row =>
+            fun x row =>
               row |>
               Array.mapi (
-                fun j _ => {
+                fun y _ => {
                   let rect =
-                    (ReactDOMRe.domElementToObj (getElementById (BoardBase.markerId i j)))##getBoundingClientRect
+                    (ReactDOMRe.domElementToObj (getElementById (BoardBase.markerId x y)))##getBoundingClientRect
                       ();
                   (rect##left, rect##top)
                 }
@@ -51,17 +51,17 @@ let make ::rotation ::gameState ::move _children => {
     <div className="Board">
       <BoardBase rotation />
       (
-        Const.ijList |>
+        Engine.ijList |>
         List.map (
-          fun (i, j) =>
+          fun (x, y) =>
             <div
               className="Board-columnContainer"
-              key=(columnKey i j)
+              key=(columnKey x y)
               style=(
                       ReactDOMRe.Style.make
-                        transform::(columnBaseTransform columnPositions.(i).(j)) ()
+                        transform::(columnBaseTransform columnPositions.(x).(y)) ()
                     )>
-              <Column i j gameState move=(fun _ => move (i, j)) />
+              <Column x y gameState move=(fun _ => move (x, y)) />
             </div>
         ) |> Array.of_list |> ReasonReact.arrayToElement
       )

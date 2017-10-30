@@ -1,6 +1,20 @@
 $Bead-size: 50px;
 $Bead-gap: -3px;
 
+@import "./Column";
+
+@keyframes bounce {
+  0% {
+    transform: scale(.75);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .Bead {
   position: relative;
   width: $Bead-size;
@@ -8,6 +22,41 @@ $Bead-gap: -3px;
   left: -($Bead-size / 2);
   margin-top: $Bead-gap;
   border-radius: 50%;
-  background: #ff9c38; // TODO: p1/p2 color, winning bead color
-  opacity: .2;
+  opacity: .6;
+  animation: bounce .2s;
+
+  &.Bead--p1 {
+    background: #ff9c38;
+  }
+  &.Bead--p2 {
+    background: #4296f5;
+  }
+  &.Bead--winning {
+    background: #ffd61f;
+  }
+}
+
+.Bead::before {
+  content: "";
+  @include makeShadow(#{$Bead-size} 0 0 #{$Bead-size} / #{$Bead-size});
+}
+
+.Bead-cap {
+  position: absolute;
+  bottom: - $Column-capHeight;
+  left: ($Bead-size - $Column-width) / 2;
+  width: $Column-width;
+  height: $Column-capHeight * 2;
+  border-radius: #{$Column-width / 2} / #{$Column-capHeight};
+  background: $Column-background;
+  transition: background .25s;
+
+  .Column:hover & {
+    background: $Column-backgroundHover;
+  }
+}
+
+.Bead-cap::before {
+  content: "";
+  @include makeShadow(#{$Column-width / 2} 0 0 #{$Column-width / 2} / #{$Column-capHeight});
 }

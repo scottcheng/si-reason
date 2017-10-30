@@ -1,6 +1,8 @@
 $Column-width: 16px;
 $Column-height: $Bead-size * 4 + $Bead-gap * 3 + 5;
 $Column-capHeight: 5px;
+$Column-background: #e0e0e0;
+$Column-backgroundHover: #92e2b0;
 
 .Column {
   position: absolute;
@@ -11,24 +13,18 @@ $Column-capHeight: 5px;
   width: $Column-width;
   padding: (-$Bead-gap) ($Column-width / 2) 0;
   border-radius: #{$Column-width / 2} #{$Column-width / 2} 0 0 / #{$Column-capHeight};
-  background: #e0e0e0;
+  background: $Column-background;
   transition: background .25s;
 
   &:hover {
-    background: #92e2b0;
+    background: $Column-backgroundHover;
   }
 }
 
 // Shadow
 .Column::before {
   content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  border-radius: #{$Column-width / 2} 0 0 0 / #{$Column-capHeight};
-  background: rgba(#000, .07);
+  @include makeShadow(#{$Column-width / 2} 0 0 0 / #{$Column-capHeight});
 }
 
 // Cap

@@ -15,6 +15,8 @@ $gray-light: #aaa;
 $yellow: #ffd61f;
 $yellow-dark: #f5d000;
 
+@import "./mixins";
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

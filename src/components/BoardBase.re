@@ -10,7 +10,7 @@ let position x =>
   string_of_float (
     (
       boardPadding +.
-      (1.0 -. boardPadding *. 2.0) /. float_of_int (Engine.numRows - 1) *. float_of_int x
+      (1.0 -. boardPadding *. 2.0) /. float_of_int (Board.numRows - 1) *. float_of_int x
     ) *. 100.0
   ) ^ "%";
 
@@ -25,7 +25,7 @@ let make ::rotation _children => {
     <div
       className="BoardBase" style=(ReactDOMRe.Style.make transform::(baseTransform rotation) ())>
       (
-        Engine.ijList |>
+        Board.ijList |>
         List.map (
           fun (x, y) =>
             <div

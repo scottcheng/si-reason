@@ -12,14 +12,12 @@ let component = ReasonReact.reducerComponent "Game";
 
 let make _children => {
   ...component,
-  initialState: fun () => {rotation: 0, gameState: Engine.emptyState},
+  initialState: fun () => {rotation: 0, gameState: Engine.initialState},
   reducer: fun action state =>
     switch action {
     | Rotate inc => ReasonReact.Update {...state, rotation: state.rotation + inc}
-    | Reset => ReasonReact.Update {...state, rotation: 0, gameState: Engine.emptyState}
-    | Move (x, y) =>
-      /* TODO: pass in active player */
-      ReasonReact.Update {...state, gameState: Engine.move (x, y) P1 state.gameState}
+    | Reset => ReasonReact.Update {rotation: 0, gameState: Engine.initialState}
+    | Move (x, y) => ReasonReact.Update {...state, gameState: Engine.move (x, y) state.gameState}
     },
   render: fun {state, reduce} =>
     <div className="Game">
@@ -28,14 +26,14 @@ let make _children => {
         rotateCounterClockwise=(reduce (fun _ => Rotate 90))
         reset=(reduce (fun _ => Reset))
       />
-      <Board
+      <BoardView
         rotation=state.rotation
-        gameState=state.gameState
+        board=state.gameState.board
         move=(reduce (fun (x, y) => Move (x, y)))
       />
       (
         ReasonReact.stringToElement (
-          switch (Engine.winner state.gameState) {
+          switch (Board.winner state.gameState.board) {
           | Some P1 => "winner is P1"
           | Some P2 => "winner is P2"
           | _ => "no winner"

@@ -1,3 +1,4 @@
+/* Module called BoardView to avoid conflicting filename with the board logic module */
 external requestAnimationFrame : (unit => unit) => unit = "" [@@bs.val];
 
 external getElementById : string => Dom.element = "document.getElementById" [@@bs.val];
@@ -7,7 +8,7 @@ let columnKey x y => {j|$x-$y|j};
 let columnBaseTransform (x, y) =>
   "translate(" ^ string_of_float x ^ "px, " ^ string_of_float y ^ "px)";
 
-let emptyColumnPositions = (0., 0.) |> Array.make_matrix Engine.numRows Engine.numRows;
+let emptyColumnPositions = (0., 0.) |> Array.make_matrix Board.numRows Board.numRows;
 
 type state = {columnPositions: array (array (float, float))};
 
@@ -16,7 +17,7 @@ type actions =
 
 let component = ReasonReact.reducerComponent "Board";
 
-let make ::rotation ::gameState ::move _children => {
+let make ::rotation ::board ::move _children => {
   ...component,
   initialState: fun () => {columnPositions: emptyColumnPositions},
   reducer: fun action _ =>
@@ -51,7 +52,7 @@ let make ::rotation ::gameState ::move _children => {
     <div className="Board">
       <BoardBase rotation />
       (
-        Engine.ijList |>
+        Board.ijList |>
         List.map (
           fun (x, y) =>
             <div
@@ -61,7 +62,7 @@ let make ::rotation ::gameState ::move _children => {
                       ReactDOMRe.Style.make
                         transform::(columnBaseTransform columnPositions.(x).(y)) ()
                     )>
-              <Column x y gameState move=(fun _ => move (x, y)) />
+              <Column x y board move=(fun _ => move (x, y)) />
             </div>
         ) |> Array.of_list |> ReasonReact.arrayToElement
       )

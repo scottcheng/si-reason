@@ -31,9 +31,9 @@
     "reason-react": ">=0.2.1"
   },
   "devDependencies": {
+    "bs-platform": "^2.0.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
-    "bs-platform": "^1.9.2",
     "webpack": "^1.14.0"
   }
 }

@@ -25,14 +25,14 @@ $Bead-gap: -3px;
   opacity: .6;
   animation: bounce .2s;
 
-  &.Bead--p1 {
-    background: #ff9c38;
+  &--p1 {
+    background: $color-bead-1;
   }
-  &.Bead--p2 {
-    background: #4296f5;
+  &--p2 {
+    background: $color-bead-2;
   }
-  &.Bead--winning {
-    background: #ffd61f;
+  &--winning {
+    background: $color-winning;
   }
 }
 

@@ -25,26 +25,18 @@ let make = (_children) => {
         gameState: Engine.move((x, y), state.gameState)
       })
     },
-  render: ({state, reduce}) =>
+  render: ({state: {rotation, gameState}, reduce}) =>
     <div className="Game">
       <Sidebar
+        gameState
         rotateClockwise=(reduce((_) => Rotate((-90))))
         rotateCounterClockwise=(reduce((_) => Rotate(90)))
         reset=(reduce((_) => Reset))
       />
       <BoardView
-        rotation=state.rotation
-        board=state.gameState.board
+        rotation
+        board=gameState.board
         move=(reduce(((x, y)) => Move((x, y))))
       />
-      (
-        ReasonReact.stringToElement(
-          switch (Board.winner(state.gameState.board)) {
-          | Some(P1) => "winner is P1"
-          | Some(P2) => "winner is P2"
-          | _ => "no winner"
-          }
-        )
-      )
     </div>
 };

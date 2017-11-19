@@ -17,6 +17,31 @@
   margin-top: 15px;
 }
 
+.Sidebar-player {
+  opacity: .5;
+  transition: opacity .25s;
+
+  &--active {
+    opacity: 1;
+  }
+}
+
+.Sidebar-playerBead {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+
+  &--p1 {
+    background: $color-bead-1;
+  }
+  &--p2 {
+    background: $color-bead-2;
+  }
+}
+
 .Sidebar-rotateBtn {
   display: inline-block;
   color: $gray;

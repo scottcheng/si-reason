@@ -82,6 +82,54 @@ body {
   background: #f8f8f8;
   transition: all .25s; }
 
+.Column {
+  position: absolute;
+  transform: rotate(180deg);
+  left: -8px;
+  bottom: 0;
+  height: 196px;
+  width: 16px;
+  padding: 3px 8px 0;
+  border-radius: 8px 8px 0 0 / 5px;
+  background: #e0e0e0;
+  transition: background .25s; }
+
+.Column--canMove {
+  cursor: pointer; }
+  .Column--canMove:hover {
+    background: #92e2b0; }
+
+.Column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 8px 0 0 0 / 5px;
+  background: rgba(0, 0, 0, 0.07); }
+
+.Column::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  border-radius: 8px / 5px;
+  background: #eee;
+  transition: background .25s; }
+  .Column:hover .Column::after {
+    background: #d6f0e0; }
+
+@keyframes bounce {
+  0% {
+    transform: scale(0.75); }
+  50% {
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1); } }
+
 .Bead {
   position: relative;
   width: 50px;
@@ -89,8 +137,46 @@ body {
   left: -25px;
   margin-top: -3px;
   border-radius: 50%;
-  background: #ff9c38;
-  opacity: .2; }
+  opacity: .6;
+  animation: bounce .2s; }
+  .Bead.Bead--p1 {
+    background: #ff9c38; }
+  .Bead.Bead--p2 {
+    background: #4296f5; }
+  .Bead.Bead--winning {
+    background: #ffd61f; }
+
+.Bead::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 50px 0 0 50px / 50px;
+  background: rgba(0, 0, 0, 0.07); }
+
+.Bead-cap {
+  position: absolute;
+  bottom: -5px;
+  left: 17px;
+  width: 16px;
+  height: 10px;
+  border-radius: 8px / 5px;
+  background: #e0e0e0;
+  transition: background .25s; }
+  .Column--canMove:hover .Bead-cap {
+    background: #92e2b0; }
+
+.Bead-cap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 8px 0 0 8px / 5px;
+  background: rgba(0, 0, 0, 0.07); }
 
 .Column {
   position: absolute;
@@ -103,7 +189,10 @@ body {
   border-radius: 8px 8px 0 0 / 5px;
   background: #e0e0e0;
   transition: background .25s; }
-  .Column:hover {
+
+.Column--canMove {
+  cursor: pointer; }
+  .Column--canMove:hover {
     background: #92e2b0; }
 
 .Column::before {

@@ -15,7 +15,10 @@ $Column-backgroundHover: #92e2b0;
   border-radius: #{$Column-width / 2} #{$Column-width / 2} 0 0 / #{$Column-capHeight};
   background: $Column-background;
   transition: background .25s;
+}
 
+.Column--canMove {
+  cursor: pointer;
   &:hover {
     background: $Column-backgroundHover;
   }

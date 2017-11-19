@@ -1,18 +1,13 @@
 let component = ReasonReact.statelessComponent "Column";
 
-let make ::x ::y ::board ::move _children => {
+let make ::beads ::canMove ::tryMove _children => {
   ...component,
   render: fun _self =>
     <div
-      className="Column"
-      onClick=(
-                fun _ =>
-                  if (Board.isValidMove (x, y) board) {
-                    move ()
-                  }
-              )>
+      className=(canMove ? "Column Column--canMove" : "Column")
+      onClick=tryMove>
       (
-        board |> Array.map (fun layer => layer.(x).(y)) |>
+        beads |>
         Array.mapi (
           fun i el =>
             switch el {

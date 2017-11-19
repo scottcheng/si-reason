@@ -1,14 +1,16 @@
 /* Module called BoardView to avoid conflicting filename with the board logic module */
 external requestAnimationFrame : (unit => unit) => unit = "" [@@bs.val];
 
-external getElementById : string => Dom.element = "document.getElementById" [@@bs.val];
+external getElementById : string => Dom.element =
+  "document.getElementById" [@@bs.val];
 
 let columnKey x y => {j|$x-$y|j};
 
 let columnBaseTransform (x, y) =>
   "translate(" ^ string_of_float x ^ "px, " ^ string_of_float y ^ "px)";
 
-let emptyColumnPositions = (0., 0.) |> Array.make_matrix Board.numRows Board.numRows;
+let emptyColumnPositions =
+  (0., 0.) |> Array.make_matrix Board.numRows Board.numRows;
 
 type state = {columnPositions: array (array (float, float))};
 
@@ -32,7 +34,11 @@ let make ::rotation ::board ::move _children => {
               Array.mapi (
                 fun y _ => {
                   let rect =
-                    (ReactDOMRe.domElementToObj (getElementById (BoardBase.markerId x y)))##getBoundingClientRect
+                    (
+                      ReactDOMRe.domElementToObj (
+                        getElementById (BoardBase.markerId x y)
+                      )
+                    )##getBoundingClientRect
                       ();
                   (rect##left, rect##top)
                 }
@@ -60,9 +66,21 @@ let make ::rotation ::board ::move _children => {
               key=(columnKey x y)
               style=(
                       ReactDOMRe.Style.make
-                        transform::(columnBaseTransform columnPositions.(x).(y)) ()
+                        transform::(
+                          columnBaseTransform columnPositions.(x).(y)
+                        )
+                        ()
                     )>
-              <Column x y board move=(fun _ => move (x, y)) />
+              <Column
+                beads=(board |> Array.map (fun layer => layer.(x).(y)))
+                canMove=(Board.isValidMove (x, y) board)
+                tryMove=(
+                          fun _ =>
+                            if (Board.isValidMove (x, y) board) {
+                              move (x, y)
+                            }
+                        )
+              />
             </div>
         ) |> Array.of_list |> ReasonReact.arrayToElement
       )

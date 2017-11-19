@@ -51,7 +51,7 @@ $Bead-gap: -3px;
   background: $Column-background;
   transition: background .25s;
 
-  .Column:hover & {
+  .Column--canMove:hover & {
     background: $Column-backgroundHover;
   }
 }

@@ -1,14 +1,17 @@
 /* Module called BoardView to avoid conflicting filename with the board logic module */
 [@bs.val] external requestAnimationFrame : (unit => unit) => unit = "";
 
-[@bs.val] external getElementById : string => Dom.element = "document.getElementById";
+[@bs.val] external getElementById : string => Dom.element =
+  "document.getElementById";
 
 let columnKey = (x, y) => {j|$x-$y|j};
 
 let columnBaseTransform = ((x, y)) =>
-  "translate(" ++ (string_of_float(x) ++ ("px, " ++ (string_of_float(y) ++ "px)")));
+  "translate("
+  ++ (string_of_float(x) ++ ("px, " ++ (string_of_float(y) ++ "px)")));
 
-let emptyColumnPositions = (0., 0.) |> Array.make_matrix(Board.numRows, Board.numRows);
+let emptyColumnPositions =
+  (0., 0.) |> Array.make_matrix(Board.numRows, Board.numRows);
 
 type state = {columnPositions: array(array((float, float)))};
 
@@ -32,7 +35,9 @@ let make = (~rotation, ~board, ~move, _children) => {
                  |> Array.mapi(
                       (y, _) => {
                         let rect =
-                          ReactDOMRe.domElementToObj(getElementById(BoardBase.markerId(x, y)))##getBoundingClientRect
+                          ReactDOMRe.domElementToObj(
+                            getElementById(BoardBase.markerId(x, y))
+                          )##getBoundingClientRect
                             ();
                         (rect##left, rect##top)
                       }
@@ -59,7 +64,10 @@ let make = (~rotation, ~board, ~move, _children) => {
                  className="Board-columnContainer"
                  key=(columnKey(x, y))
                  style=(
-                   ReactDOMRe.Style.make(~transform=columnBaseTransform(columnPositions[x][y]), ())
+                   ReactDOMRe.Style.make(
+                     ~transform=columnBaseTransform(columnPositions[x][y]),
+                     ()
+                   )
                  )>
                  <Column
                    beads=(board |> Array.map((layer) => layer[x][y]))

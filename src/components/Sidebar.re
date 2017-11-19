@@ -13,19 +13,30 @@ let make = (~rotateClockwise, ~rotateCounterClockwise, ~reset, _children) => {
         (
           ["player 1", "player 2"]
           |> List.map(
-               (p) => <div key=p className="Sidebar-player Sidebar-subSection"> (se(p)) </div>
+               (p) =>
+                 <div key=p className="Sidebar-player Sidebar-subSection">
+                   (se(p))
+                 </div>
              )
           |> Array.of_list
           |> ReasonReact.arrayToElement
         )
       </div>
       <div className="Sidebar-section">
-        <div className="Sidebar-rotateBtn icon-rotate-left" onClick=rotateClockwise />
-        <div className="Sidebar-rotateBtn icon-rotate-right" onClick=rotateCounterClockwise />
+        <div
+          className="Sidebar-rotateBtn icon-rotate-left"
+          onClick=rotateClockwise
+        />
+        <div
+          className="Sidebar-rotateBtn icon-rotate-right"
+          onClick=rotateCounterClockwise
+        />
       </div>
       <div className="Sidebar-info">
         <div className="Sidebar-subSection">
-          <span className="Sidebar-link" onClick=reset> (se("New game")) </span>
+          <span className="Sidebar-link" onClick=reset>
+            (se("New game"))
+          </span>
         </div>
         <div className="Sidebar-subSection">
           <span className="Sidebar-link"> (se("About")) </span>

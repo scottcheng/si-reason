@@ -27,7 +27,8 @@ let make = (~rotation, _children) => {
   ...component,
   render: (_self) =>
     <div
-      className="BoardBase" style=(ReactDOMRe.Style.make(~transform=baseTransform(rotation), ()))>
+      className="BoardBase"
+      style=(ReactDOMRe.Style.make(~transform=baseTransform(rotation), ()))>
       (
         Board.ijList
         |> List.map(

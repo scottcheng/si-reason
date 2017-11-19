@@ -14,4 +14,5 @@ let otherPlayer = (player) =>
 
 let move = ((x, y), {board, player}) =>
   Board.isValidMove((x, y), board) ?
-    {board: Board.move((x, y), player, board), player: otherPlayer(player)} : {board, player};
+    {board: Board.move((x, y), player, board), player: otherPlayer(player)} :
+    {board, player};

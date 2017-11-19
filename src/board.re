@@ -2,9 +2,13 @@ let numRows = 4;
 
 let iList = [0, 1, 2, 3];
 
-let ijList = iList |> List.map((i) => iList |> List.map((j) => (i, j))) |> List.flatten;
+let ijList =
+  iList |> List.map((i) => iList |> List.map((j) => (i, j))) |> List.flatten;
 
-let ijkList = ijList |> List.map(((i, j)) => iList |> List.map((k) => (i, j, k))) |> List.flatten;
+let ijkList =
+  ijList
+  |> List.map(((i, j)) => iList |> List.map((k) => (i, j, k)))
+  |> List.flatten;
 
 type player =
   | P1
@@ -12,14 +16,16 @@ type player =
 
 type state = array(array(array(option(player))));
 
-let emptyState: state = None |> Array.make(numRows) |> Array.make(numRows) |> Array.make(numRows);
+let emptyState: state =
+  None |> Array.make(numRows) |> Array.make(numRows) |> Array.make(numRows);
 
 let winner = (state) => {
   /* Pair of coordinates at two ends of 4 consecutive places */
   let allPairs =
     ijkList
     |> List.map(
-         ((z1, x1, y1)) => ijkList |> List.map(((z2, x2, y2)) => ((z1, x1, y1), (z2, x2, y2)))
+         ((z1, x1, y1)) =>
+           ijkList |> List.map(((z2, x2, y2)) => ((z1, x1, y1), (z2, x2, y2)))
        )
     |> List.flatten
     |> List.filter(
@@ -32,7 +38,11 @@ let winner = (state) => {
   let checkWinner = (p, ((z1, x1, y1), (z2, x2, y2))) =>
     iList
     |> List.map(
-         (i) => state[interpolate(z1, z2, i)][interpolate(x1, x2, i)][interpolate(y1, y2, i)]
+         (i) => state[interpolate(z1, z2, i)][interpolate(x1, x2, i)][interpolate(
+                                                                    y1,
+                                                                    y2,
+                                                                    i
+                                                                    )]
        )
     |> List.for_all((el) => el == Some(p));
   let checkWinnerInAllPairs = (p) => allPairs |> List.exists(checkWinner(p));
@@ -44,11 +54,13 @@ let winner = (state) => {
   }
 };
 
-let isFull = (state) => ijList |> List.for_all(((x, y)) => state[numRows - 1][x][y] != None);
+let isFull = (state) =>
+  ijList |> List.for_all(((x, y)) => state[numRows - 1][x][y] != None);
 
 let isEnd = (state) => winner(state) != None || isFull(state);
 
-let isValidMove = ((x, y), state) => ! isEnd(state) && state[numRows - 1][x][y] == None;
+let isValidMove = ((x, y), state) =>
+  ! isEnd(state) && state[numRows - 1][x][y] == None;
 
 let move = ((x, y), player, state) =>
   isValidMove((x, y), state) ?
@@ -62,7 +74,13 @@ let move = ((x, y), player, state) =>
         Array.fold_left(
           ((curState, hasPlaced), layer) =>
             ! hasPlaced && layer[x][y] == None ?
-              (Array.append(curState, [|putPieceOnLayer((x, y), player, layer)|]), true) :
+              (
+                Array.append(
+                  curState,
+                  [|putPieceOnLayer((x, y), player, layer)|]
+                ),
+                true
+              ) :
               (Array.append(curState, [|layer|]), hasPlaced),
           ([||], false),
           state

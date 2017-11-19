@@ -15,10 +15,15 @@ let make = (_children) => {
   initialState: () => {rotation: 0, gameState: Engine.initialState},
   reducer: (action, state) =>
     switch action {
-    | Rotate(inc) => ReasonReact.Update({...state, rotation: state.rotation + inc})
-    | Reset => ReasonReact.Update({rotation: 0, gameState: Engine.initialState})
+    | Rotate(inc) =>
+      ReasonReact.Update({...state, rotation: state.rotation + inc})
+    | Reset =>
+      ReasonReact.Update({rotation: 0, gameState: Engine.initialState})
     | Move((x, y)) =>
-      ReasonReact.Update({...state, gameState: Engine.move((x, y), state.gameState)})
+      ReasonReact.Update({
+        ...state,
+        gameState: Engine.move((x, y), state.gameState)
+      })
     },
   render: ({state, reduce}) =>
     <div className="Game">

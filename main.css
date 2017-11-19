@@ -52,6 +52,24 @@ body {
 .Sidebar-subSection {
   margin-top: 15px; }
 
+.Sidebar-player {
+  opacity: .5;
+  transition: opacity .25s; }
+  .Sidebar-player--active {
+    opacity: 1; }
+
+.Sidebar-playerBead {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%; }
+  .Sidebar-playerBead--p1 {
+    background: #ff9c38; }
+  .Sidebar-playerBead--p2 {
+    background: #4296f5; }
+
 .Sidebar-rotateBtn {
   display: inline-block;
   color: #888;
@@ -93,11 +111,10 @@ body {
   border-radius: 8px 8px 0 0 / 5px;
   background: #e0e0e0;
   transition: background .25s; }
-
-.Column--canMove {
-  cursor: pointer; }
-  .Column--canMove:hover {
-    background: #92e2b0; }
+  .Column--canMove {
+    cursor: pointer; }
+    .Column--canMove:hover {
+      background: #92e2b0; }
 
 .Column::before {
   content: "";
@@ -139,11 +156,11 @@ body {
   border-radius: 50%;
   opacity: .6;
   animation: bounce .2s; }
-  .Bead.Bead--p1 {
+  .Bead--p1 {
     background: #ff9c38; }
-  .Bead.Bead--p2 {
+  .Bead--p2 {
     background: #4296f5; }
-  .Bead.Bead--winning {
+  .Bead--winning {
     background: #ffd61f; }
 
 .Bead::before {
@@ -189,11 +206,10 @@ body {
   border-radius: 8px 8px 0 0 / 5px;
   background: #e0e0e0;
   transition: background .25s; }
-
-.Column--canMove {
-  cursor: pointer; }
-  .Column--canMove:hover {
-    background: #92e2b0; }
+  .Column--canMove {
+    cursor: pointer; }
+    .Column--canMove:hover {
+      background: #92e2b0; }
 
 .Column::before {
   content: "";

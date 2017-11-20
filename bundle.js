@@ -29560,7 +29560,7 @@
 	var ReasonReact        = __webpack_require__(186);
 	var Engine$SiReason    = __webpack_require__(206);
 	var Sidebar$SiReason   = __webpack_require__(210);
-	var BoardView$SiReason = __webpack_require__(211);
+	var BoardView$SiReason = __webpack_require__(212);
 
 	var component = ReasonReact.reducerComponent("Game");
 
@@ -29772,7 +29772,7 @@
 	  var interpolate = function (a, b, i) {
 	    return Caml_int32.imul((b - a | 0) / 3 | 0, i) + a | 0;
 	  };
-	  var checkWinner = function (p, param) {
+	  var allPositionsForPair = function (param) {
 	    var match = param[1];
 	    var y2 = match[2];
 	    var x2 = match[1];
@@ -29781,11 +29781,33 @@
 	    var y1 = match$1[2];
 	    var x1 = match$1[1];
 	    var z1 = match$1[0];
+	    return List.map((function (i) {
+	                  return /* tuple */[
+	                          interpolate(z1, z2, i),
+	                          interpolate(x1, x2, i),
+	                          interpolate(y1, y2, i)
+	                        ];
+	                }), iList);
+	  };
+	  var checkWinner = function (p, param) {
+	    var match = param[1];
+	    var match$1 = param[0];
 	    return List.for_all((function (el) {
 	                  return Caml_obj.caml_equal(el, /* Some */[p]);
-	                }), List.map((function (i) {
-	                      return Caml_array.caml_array_get(Caml_array.caml_array_get(Caml_array.caml_array_get(state, interpolate(z1, z2, i)), interpolate(x1, x2, i)), interpolate(y1, y2, i));
-	                    }), iList));
+	                }), List.map((function (param) {
+	                      return Caml_array.caml_array_get(Caml_array.caml_array_get(Caml_array.caml_array_get(state, param[0]), param[1]), param[2]);
+	                    }), allPositionsForPair(/* tuple */[
+	                        /* tuple */[
+	                          match$1[0],
+	                          match$1[1],
+	                          match$1[2]
+	                        ],
+	                        /* tuple */[
+	                          match[0],
+	                          match[1],
+	                          match[2]
+	                        ]
+	                      ])));
 	  };
 	  var match = List.exists((function (param) {
 	          return checkWinner(/* P1 */0, param);
@@ -29797,10 +29819,20 @@
 	    if (match$1 !== 0) {
 	      return /* None */0;
 	    } else {
-	      return /* Some */[/* P1 */0];
+	      return /* Some */[/* tuple */[
+	                /* P1 */0,
+	                allPositionsForPair(List.find((function (param) {
+	                            return checkWinner(/* P1 */0, param);
+	                          }), allPairs))
+	              ]];
 	    }
 	  } else if (match$1 !== 0) {
-	    return /* Some */[/* P2 */1];
+	    return /* Some */[/* tuple */[
+	              /* P2 */1,
+	              allPositionsForPair(List.find((function (param) {
+	                          return checkWinner(/* P2 */1, param);
+	                        }), allPairs))
+	            ]];
 	  } else {
 	    return /* None */0;
 	  }
@@ -30395,6 +30427,7 @@
 	var Caml_obj       = __webpack_require__(189);
 	var Pervasives     = __webpack_require__(191);
 	var ReasonReact    = __webpack_require__(186);
+	var Util$SiReason  = __webpack_require__(211);
 	var Board$SiReason = __webpack_require__(207);
 
 	function se(prim) {
@@ -31454,15 +31487,34 @@
 	                      className: "Sidebar-section"
 	                    }, $$Array.of_list(List.mapi((function (i, param) {
 	                                var player = param[0];
-	                                var match = Caml_obj.caml_equal(gameState[/* player */1], player);
-	                                var match$1 = Caml_obj.caml_equal(Board$SiReason.winner(gameState[/* board */0]), /* Some */[player]);
+	                                var match = Board$SiReason.winner(gameState[/* board */0]);
 	                                return React.createElement("div", {
 	                                            key: Pervasives.string_of_int(i),
-	                                            className: "Sidebar-player Sidebar-subSection" + (
-	                                              match !== 0 ? " Sidebar-player--active" : ""
-	                                            ) + (
-	                                              match$1 !== 0 ? " Sidebar-player--winner" : ""
-	                                            )
+	                                            className: Util$SiReason.cx(/* :: */[
+	                                                  /* tuple */[
+	                                                    "Sidebar-subSection",
+	                                                    /* true */1
+	                                                  ],
+	                                                  /* :: */[
+	                                                    /* tuple */[
+	                                                      "Sidebar-player",
+	                                                      /* true */1
+	                                                    ],
+	                                                    /* :: */[
+	                                                      /* tuple */[
+	                                                        "Sidebar-player--active",
+	                                                        Caml_obj.caml_equal(gameState[/* player */1], player)
+	                                                      ],
+	                                                      /* :: */[
+	                                                        /* tuple */[
+	                                                          "Sidebar-player--winner",
+	                                                          match && Caml_obj.caml_equal(match[0][0], player) ? /* true */1 : /* false */0
+	                                                        ],
+	                                                        /* [] */0
+	                                                      ]
+	                                                    ]
+	                                                  ]
+	                                                ])
 	                                          }, React.createElement("div", {
 	                                                className: player !== 0 ? "Sidebar-playerBead Sidebar-playerBead--p2" : "Sidebar-playerBead Sidebar-playerBead--p1"
 	                                              }), param[1]);
@@ -31516,6 +31568,29 @@
 	// Generated by BUCKLESCRIPT VERSION 2.0.0, PLEASE EDIT WITH CARE
 	'use strict';
 
+	var List = __webpack_require__(187);
+
+	function cx(classNames) {
+	  return List.fold_left((function (curClass, param) {
+	                if (param[1] !== 0) {
+	                  return "" + (String(curClass) + (" " + (String(param[0]) + "")));
+	                } else {
+	                  return curClass;
+	                }
+	              }), "", classNames);
+	}
+
+	exports.cx = cx;
+	/* No side effect */
+
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// Generated by BUCKLESCRIPT VERSION 2.0.0, PLEASE EDIT WITH CARE
+	'use strict';
+
 	var List               = __webpack_require__(187);
 	var $$Array            = __webpack_require__(208);
 	var Block              = __webpack_require__(190);
@@ -31525,8 +31600,8 @@
 	var Pervasives         = __webpack_require__(191);
 	var ReasonReact        = __webpack_require__(186);
 	var Board$SiReason     = __webpack_require__(207);
-	var Column$SiReason    = __webpack_require__(212);
-	var BoardBase$SiReason = __webpack_require__(214);
+	var Column$SiReason    = __webpack_require__(213);
+	var BoardBase$SiReason = __webpack_require__(215);
 
 	function columnKey(x, y) {
 	  return "" + (String(x) + ("-" + (String(y) + "")));
@@ -31559,23 +31634,23 @@
 	    });
 	  newrecord[/* render */9] = (function (param) {
 	      var columnPositions = param[/* state */4][/* columnPositions */0];
+	      var match = Board$SiReason.winner(board);
 	      return React.createElement("div", {
 	                  className: "Board"
-	                }, ReasonReact.element(/* None */0, /* None */0, BoardBase$SiReason.make(rotation, /* array */[])), $$Array.of_list(List.map((function (param) {
-	                            var y = param[1];
-	                            var x = param[0];
+	                }, ReasonReact.element(/* None */0, /* None */0, BoardBase$SiReason.make(rotation, match ? /* true */1 : /* false */0, /* array */[])), $$Array.of_list(List.map((function (param) {
+	                            var match = param[1];
+	                            var y = match[1];
+	                            var x = match[0];
+	                            var i = param[0];
 	                            return React.createElement("div", {
 	                                        key: columnKey(x, y),
 	                                        className: "Board-columnContainer",
 	                                        style: {
+	                                          zIndex: Pervasives.string_of_int(i),
+	                                          opacity: Pervasives.string_of_float(i / 16 * 0.5 + 0.5),
 	                                          transform: columnBaseTransform(Caml_array.caml_array_get(Caml_array.caml_array_get(columnPositions, x), y))
 	                                        }
-	                                      }, ReasonReact.element(/* None */0, /* None */0, Column$SiReason.make($$Array.map((function (layer) {
-	                                                      return Caml_array.caml_array_get(Caml_array.caml_array_get(layer, x), y);
-	                                                    }), board), Board$SiReason.isValidMove(/* tuple */[
-	                                                    x,
-	                                                    y
-	                                                  ], board), (function () {
+	                                      }, ReasonReact.element(/* None */0, /* None */0, Column$SiReason.make(board, x, y, (function () {
 	                                                  if (Board$SiReason.isValidMove(/* tuple */[
 	                                                          x,
 	                                                          y
@@ -31587,8 +31662,31 @@
 	                                                  } else {
 	                                                    return 0;
 	                                                  }
-	                                                }), /* array */[])));
-	                          }), Board$SiReason.ijList)));
+	                                                }), Board$SiReason.winner(board), /* array */[])));
+	                          }), List.sort((function (param, param$1) {
+	                                var match = param$1[1];
+	                                var x2 = match[0];
+	                                var match$1 = param[1];
+	                                var x1 = match$1[0];
+	                                var match$2 = +(x1 === x2);
+	                                if (match$2 !== 0) {
+	                                  return match$1[1] - match[1] | 0;
+	                                } else {
+	                                  return x1 - x2 | 0;
+	                                }
+	                              }), List.mapi((function (i, param) {
+	                                    return /* tuple */[
+	                                            i,
+	                                            /* tuple */[
+	                                              param[0],
+	                                              param[1]
+	                                            ]
+	                                          ];
+	                                  }), List.sort((function (param, param$1) {
+	                                        var match = Caml_array.caml_array_get(Caml_array.caml_array_get(columnPositions, param[0]), param[1]);
+	                                        var match$1 = Caml_array.caml_array_get(Caml_array.caml_array_get(columnPositions, param$1[0]), param$1[1]);
+	                                        return (match[1] | 0) - (match$1[1] | 0) | 0;
+	                                      }), Board$SiReason.ijList))))));
 	    });
 	  newrecord[/* initialState */10] = (function () {
 	      return /* record */[/* columnPositions */emptyColumnPositions];
@@ -31616,37 +31714,66 @@
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Generated by BUCKLESCRIPT VERSION 2.0.0, PLEASE EDIT WITH CARE
 	'use strict';
 
-	var $$Array       = __webpack_require__(208);
-	var React         = __webpack_require__(202);
-	var Pervasives    = __webpack_require__(191);
-	var ReasonReact   = __webpack_require__(186);
-	var Bead$SiReason = __webpack_require__(213);
+	var List           = __webpack_require__(187);
+	var $$Array        = __webpack_require__(208);
+	var React          = __webpack_require__(202);
+	var Caml_obj       = __webpack_require__(189);
+	var Caml_array     = __webpack_require__(184);
+	var Pervasives     = __webpack_require__(191);
+	var ReasonReact    = __webpack_require__(186);
+	var Bead$SiReason  = __webpack_require__(214);
+	var Util$SiReason  = __webpack_require__(211);
+	var Board$SiReason = __webpack_require__(207);
 
 	var component = ReasonReact.statelessComponent("Column");
 
-	function make(beads, canMove, tryMove, _) {
+	function make(board, x, y, tryMove, winner, _) {
 	  var newrecord = component.slice();
 	  newrecord[/* render */9] = (function () {
 	      return React.createElement("div", {
-	                  className: canMove !== 0 ? "Column Column--canMove" : "Column",
+	                  className: Util$SiReason.cx(/* :: */[
+	                        /* tuple */[
+	                          "Column",
+	                          /* true */1
+	                        ],
+	                        /* :: */[
+	                          /* tuple */[
+	                            "Column--canMove",
+	                            Board$SiReason.isValidMove(/* tuple */[
+	                                  x,
+	                                  y
+	                                ], board)
+	                          ],
+	                          /* [] */0
+	                        ]
+	                      ]),
 	                  onClick: tryMove
 	                }, $$Array.mapi((function (i, el) {
+	                        var winning = winner && List.exists((function (pos) {
+	                                return Caml_obj.caml_equal(pos, /* tuple */[
+	                                            i,
+	                                            x,
+	                                            y
+	                                          ]);
+	                              }), winner[0][1]) ? /* true */1 : /* false */0;
 	                        if (el) {
 	                          if (el[0] !== 0) {
-	                            return ReasonReact.element(/* Some */[Pervasives.string_of_int(i)], /* None */0, Bead$SiReason.make(/* P2 */1, /* array */[]));
+	                            return ReasonReact.element(/* Some */[Pervasives.string_of_int(i)], /* None */0, Bead$SiReason.make(/* P2 */1, winning, /* array */[]));
 	                          } else {
-	                            return ReasonReact.element(/* Some */[Pervasives.string_of_int(i)], /* None */0, Bead$SiReason.make(/* P1 */0, /* array */[]));
+	                            return ReasonReact.element(/* Some */[Pervasives.string_of_int(i)], /* None */0, Bead$SiReason.make(/* P1 */0, winning, /* array */[]));
 	                          }
 	                        } else {
 	                          return null;
 	                        }
-	                      }), beads));
+	                      }), $$Array.map((function (layer) {
+	                            return Caml_array.caml_array_get(Caml_array.caml_array_get(layer, x), y);
+	                          }), board)));
 	    });
 	  return newrecord;
 	}
@@ -31657,14 +31784,15 @@
 
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Generated by BUCKLESCRIPT VERSION 2.0.0, PLEASE EDIT WITH CARE
 	'use strict';
 
-	var React       = __webpack_require__(202);
-	var ReasonReact = __webpack_require__(186);
+	var React         = __webpack_require__(202);
+	var ReasonReact   = __webpack_require__(186);
+	var Util$SiReason = __webpack_require__(211);
 
 	var component = ReasonReact.statelessComponent("Bead");
 
@@ -31672,16 +31800,52 @@
 	      className: "Bead-cap"
 	    });
 
-	function make(player, _) {
+	function make(player, winning, _) {
 	  var newrecord = component.slice();
 	  newrecord[/* render */9] = (function () {
 	      if (player !== 0) {
 	        return React.createElement("div", {
-	                    className: "Bead Bead--p2"
+	                    className: Util$SiReason.cx(/* :: */[
+	                          /* tuple */[
+	                            "Bead",
+	                            /* true */1
+	                          ],
+	                          /* :: */[
+	                            /* tuple */[
+	                              "Bead--p2",
+	                              /* true */1
+	                            ],
+	                            /* :: */[
+	                              /* tuple */[
+	                                "Bead--winning",
+	                                winning
+	                              ],
+	                              /* [] */0
+	                            ]
+	                          ]
+	                        ])
 	                  }, cap);
 	      } else {
 	        return React.createElement("div", {
-	                    className: "Bead Bead--p1"
+	                    className: Util$SiReason.cx(/* :: */[
+	                          /* tuple */[
+	                            "Bead",
+	                            /* true */1
+	                          ],
+	                          /* :: */[
+	                            /* tuple */[
+	                              "Bead--p1",
+	                              /* true */1
+	                            ],
+	                            /* :: */[
+	                              /* tuple */[
+	                                "Bead--winning",
+	                                winning
+	                              ],
+	                              /* [] */0
+	                            ]
+	                          ]
+	                        ])
 	                  }, cap);
 	      }
 	    });
@@ -31695,7 +31859,7 @@
 
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// Generated by BUCKLESCRIPT VERSION 2.0.0, PLEASE EDIT WITH CARE
@@ -31706,6 +31870,7 @@
 	var React          = __webpack_require__(202);
 	var Pervasives     = __webpack_require__(191);
 	var ReasonReact    = __webpack_require__(186);
+	var Util$SiReason  = __webpack_require__(211);
 	var Board$SiReason = __webpack_require__(207);
 
 	var component = ReasonReact.statelessComponent("BoardBase");
@@ -31722,17 +31887,31 @@
 	  return Pervasives.string_of_float((0.125 + (1.0 - 0.125 * 2.0) / (Board$SiReason.numRows - 1 | 0) * x) * 100.0) + "%";
 	}
 
-	function baseTransform(rotation) {
-	  return "translate3d(-50%, -50%, -10000px) rotateX(60deg) rotateZ(" + (Pervasives.string_of_int(rotation + 20 | 0) + "deg)");
+	function baseTransform(rotation, winning) {
+	  return "translate3d(-50%, -50%, -10000px) rotateX(62deg) rotateZ(" + (Pervasives.string_of_int((rotation + 16 | 0) + (
+	                winning !== 0 ? 3600 : 0
+	              ) | 0) + "deg)");
 	}
 
-	function make(rotation, _) {
+	function make(rotation, winning, _) {
 	  var newrecord = component.slice();
 	  newrecord[/* render */9] = (function () {
 	      return React.createElement("div", {
-	                  className: "BoardBase",
+	                  className: Util$SiReason.cx(/* :: */[
+	                        /* tuple */[
+	                          "BoardBase",
+	                          /* true */1
+	                        ],
+	                        /* :: */[
+	                          /* tuple */[
+	                            "BoardBase--winning",
+	                            winning
+	                          ],
+	                          /* [] */0
+	                        ]
+	                      ]),
 	                  style: {
-	                    transform: baseTransform(rotation)
+	                    transform: baseTransform(rotation, winning)
 	                  }
 	                }, $$Array.of_list(List.map((function (param) {
 	                            var y = param[1];

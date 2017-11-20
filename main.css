@@ -57,6 +57,11 @@ body {
   transition: opacity .25s; }
   .Sidebar-player--active {
     opacity: 1; }
+  .Sidebar-player--winner {
+    opacity: 1;
+    color: #f5c800; }
+    .Sidebar-player--winner::after {
+      content: " won!"; }
 
 .Sidebar-playerBead {
   display: inline-block;
@@ -98,7 +103,9 @@ body {
   top: 60%;
   left: 55%;
   background: #f8f8f8;
-  transition: all .25s; }
+  transition: transform .25s; }
+  .BoardBase--winning {
+    transition: transform 100s linear; }
 
 .Column {
   position: absolute;
@@ -111,10 +118,6 @@ body {
   border-radius: 8px 8px 0 0 / 5px;
   background: #e0e0e0;
   transition: background .25s; }
-  .Column--canMove {
-    cursor: pointer; }
-    .Column--canMove:hover {
-      background: #92e2b0; }
 
 .Column::before {
   content: "";
@@ -136,8 +139,13 @@ body {
   border-radius: 8px / 5px;
   background: #eee;
   transition: background .25s; }
-  .Column:hover .Column::after {
-    background: #d6f0e0; }
+
+.Column--canMove {
+  cursor: pointer; }
+  .Column--canMove:hover {
+    background: #92e2b0; }
+    .Column--canMove:hover::after {
+      background: #d6f0e0; }
 
 @keyframes bounce {
   0% {
@@ -147,6 +155,14 @@ body {
   100% {
     transform: scale(1); } }
 
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 #f5c800; }
+  50% {
+    box-shadow: 0 0 0 5px #f5c800; }
+  100% {
+    box-shadow: 0 0 #f5c800; } }
+
 .Bead {
   position: relative;
   width: 50px;
@@ -154,14 +170,13 @@ body {
   left: -25px;
   margin-top: -3px;
   border-radius: 50%;
-  opacity: .6;
   animation: bounce .2s; }
   .Bead--p1 {
     background: #ff9c38; }
   .Bead--p2 {
     background: #4296f5; }
   .Bead--winning {
-    background: #ffd61f; }
+    animation: shine 1s infinite; }
 
 .Bead::before {
   content: "";
@@ -206,10 +221,6 @@ body {
   border-radius: 8px 8px 0 0 / 5px;
   background: #e0e0e0;
   transition: background .25s; }
-  .Column--canMove {
-    cursor: pointer; }
-    .Column--canMove:hover {
-      background: #92e2b0; }
 
 .Column::before {
   content: "";
@@ -231,8 +242,13 @@ body {
   border-radius: 8px / 5px;
   background: #eee;
   transition: background .25s; }
-  .Column:hover .Column::after {
-    background: #d6f0e0; }
+
+.Column--canMove {
+  cursor: pointer; }
+  .Column--canMove:hover {
+    background: #92e2b0; }
+    .Column--canMove:hover::after {
+      background: #d6f0e0; }
 
 .Board-columnContainer {
   position: fixed;

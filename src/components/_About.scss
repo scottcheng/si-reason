@@ -1,0 +1,28 @@
+.About {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(#fff, .25);
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.About-content {
+  background: rgba(#fff, .9);
+  width: 600px;
+  padding: 50px;
+  line-height: 1.5;
+
+  a {
+    color: $gray-light;
+    transition: color .15s;
+    &:hover {
+      color: $gray;
+    }
+  }
+}

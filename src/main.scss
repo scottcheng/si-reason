@@ -22,6 +22,11 @@ $yellow-dark: #f5d000;
   box-sizing: border-box;
 }
 
+::selection {
+  background: $gray;
+  color: #fff;
+}
+
 body {
   margin: 0;
   font-family: Titillium;
@@ -34,3 +39,4 @@ body {
 @import "./components/Bead";
 @import "./components/Column";
 @import "./components/Board";
+@import "./components/About";

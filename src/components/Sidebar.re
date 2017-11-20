@@ -1,7 +1,5 @@
 let se = ReasonReact.stringToElement;
 
-let style = ReactDOMRe.Style.make;
-
 let component = ReasonReact.statelessComponent("Sidebar");
 
 let make =
@@ -10,6 +8,7 @@ let make =
       ~rotateClockwise,
       ~rotateCounterClockwise,
       ~reset,
+      ~openAbout,
       _children
     ) => {
   ...component,
@@ -69,7 +68,9 @@ let make =
           </span>
         </div>
         <div className="Sidebar-subSection">
-          <span className="Sidebar-link"> (se("About")) </span>
+          <span className="Sidebar-link" onClick=openAbout>
+            (se("About"))
+          </span>
         </div>
       </div>
     </div>

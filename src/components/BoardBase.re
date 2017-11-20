@@ -18,10 +18,9 @@ let position = (x) =>
   )
   ++ "%";
 
-/* TODO: tweak perspective */
 let baseTransform = (rotation) =>
-  "translate3d(-50%, -50%, -10000px) rotateX(60deg) rotateZ("
-  ++ (string_of_int(rotation + 20) ++ "deg)");
+  "translate3d(-50%, -50%, -10000px) rotateX(62deg) rotateZ("
+  ++ (string_of_int(rotation + 16) ++ "deg)");
 
 let make = (~rotation, _children) => {
   ...component,

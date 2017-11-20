@@ -58,14 +58,30 @@ let make = (~rotation, ~board, ~move, _children) => {
       <BoardBase rotation />
       (
         Board.ijList
+        /* Figure out order in render perspective */
+        |> List.sort(
+             ((x1, y1), (x2, y2)) => {
+               let (_, yPx1) = columnPositions[x1][y1];
+               let (_, yPx2) = columnPositions[x2][y2];
+               int_of_float(yPx1) - int_of_float(yPx2)
+             }
+           )
+        |> List.mapi((i, (x, y)) => (i, (x, y)))
+        /* Put columns back in stable order, otherwise they rerender everytime */
+        |> List.sort(
+             ((_, (x1, y1)), (_, (x2, y2))) => x1 == x2 ? y1 - y2 : x1 - x2
+           )
         |> List.map(
-             ((x, y)) =>
+             ((i, (x, y))) =>
                <div
                  className="Board-columnContainer"
                  key=(columnKey(x, y))
                  style=(
                    ReactDOMRe.Style.make(
                      ~transform=columnBaseTransform(columnPositions[x][y]),
+                     ~opacity=
+                       string_of_float(float_of_int(i) /. 16. *. 0.5 +. 0.5),
+                     ~zIndex=string_of_int(i),
                      ()
                    )
                  )>

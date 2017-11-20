@@ -24,17 +24,18 @@ let make =
                  <div
                    key=(string_of_int(i))
                    className=(
-                     "Sidebar-player Sidebar-subSection"
-                     ++ (
-                       gameState.player == player ?
-                         " Sidebar-player--active" : ""
-                     )
-                     ++ (
-                       switch (Board.winner(gameState.board)) {
-                       | Some((winner, _)) when winner == player => " Sidebar-player--winner"
-                       | _ => ""
-                       }
-                     )
+                     Util.cx([
+                       ("Sidebar-subSection", true),
+                       ("Sidebar-player", true),
+                       ("Sidebar-player--active", gameState.player == player),
+                       (
+                         "Sidebar-player--winner",
+                         switch (Board.winner(gameState.board)) {
+                         | Some((winner, _)) when winner == player => true
+                         | _ => false
+                         }
+                       )
+                     ])
                    )>
                    <div
                      className=(

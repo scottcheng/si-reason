@@ -7,11 +7,25 @@ let make = (~player, ~winning, _children) => {
   render: (_self) =>
     switch player {
     | Board.P1 =>
-      <div className=("Bead Bead--p1" ++ (winning ? " Bead--winning" : ""))>
+      <div
+        className=(
+          Util.cx([
+            ("Bead", true),
+            ("Bead--p1", true),
+            ("Bead--winning", winning)
+          ])
+        )>
         cap
       </div>
     | Board.P2 =>
-      <div className=("Bead Bead--p2" ++ (winning ? " Bead--winning" : ""))>
+      <div
+        className=(
+          Util.cx([
+            ("Bead", true),
+            ("Bead--p2", true),
+            ("Bead--winning", winning)
+          ])
+        )>
         cap
       </div>
     }

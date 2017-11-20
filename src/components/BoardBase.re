@@ -26,7 +26,9 @@ let make = (~rotation, ~winning, _children) => {
   ...component,
   render: (_self) =>
     <div
-      className=("BoardBase" ++ (winning ? " BoardBase--winning" : ""))
+      className=(
+        Util.cx([("BoardBase", true), ("BoardBase--winning", winning)])
+      )
       style=(
         ReactDOMRe.Style.make(~transform=baseTransform(rotation, winning), ())
       )>

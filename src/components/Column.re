@@ -5,7 +5,10 @@ let make = (~board, ~x, ~y, ~tryMove, ~winner, _children) => {
   render: (_self) =>
     <div
       className=(
-        Board.isValidMove((x, y), board) ? "Column Column--canMove" : "Column"
+        Util.cx([
+          ("Column", true),
+          ("Column--canMove", Board.isValidMove((x, y), board))
+        ])
       )
       onClick=tryMove>
       (

@@ -30,8 +30,10 @@ let make =
                          " Sidebar-player--active" : ""
                      )
                      ++ (
-                       Board.winner(gameState.board) == Some(player) ?
-                         " Sidebar-player--winner" : ""
+                       switch (Board.winner(gameState.board)) {
+                       | Some((winner, _)) when winner == player => " Sidebar-player--winner"
+                       | _ => ""
+                       }
                      )
                    )>
                    <div

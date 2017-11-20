@@ -55,7 +55,15 @@ let make = (~rotation, ~board, ~move, _children) => {
   },
   render: ({state: {columnPositions}}) =>
     <div className="Board">
-      <BoardBase rotation />
+      <BoardBase
+        rotation
+        winning=(
+          switch (Board.winner(board)) {
+          | Some(_) => true
+          | None => false
+          }
+        )
+      />
       (
         Board.ijList
         /* Figure out order in render perspective */
@@ -86,14 +94,16 @@ let make = (~rotation, ~board, ~move, _children) => {
                    )
                  )>
                  <Column
-                   beads=(board |> Array.map((layer) => layer[x][y]))
-                   canMove=(Board.isValidMove((x, y), board))
+                   board
+                   x
+                   y
                    tryMove=(
                      (_) =>
                        if (Board.isValidMove((x, y), board)) {
                          move((x, y))
                        }
                    )
+                   winner=(Board.winner(board))
                  />
                </div>
            )

@@ -35,21 +35,25 @@ let winner = (state) => {
            |> List.for_all((d) => d mod (numRows - 1) == 0)
        );
   let interpolate = (a, b, i) => (b - a) / (numRows - 1) * i + a;
-  let checkWinner = (p, ((z1, x1, y1), (z2, x2, y2))) =>
+  let allPositionsForPair = (((z1, x1, y1), (z2, x2, y2))) =>
     iList
     |> List.map(
-         (i) => state[interpolate(z1, z2, i)][interpolate(x1, x2, i)][interpolate(
-                                                                    y1,
-                                                                    y2,
-                                                                    i
-                                                                    )]
-       )
+         (i) => (
+           interpolate(z1, z2, i),
+           interpolate(x1, x2, i),
+           interpolate(y1, y2, i)
+         )
+       );
+  let checkWinner = (p, ((z1, x1, y1), (z2, x2, y2))) =>
+    allPositionsForPair(((z1, x1, y1), (z2, x2, y2)))
+    |> List.map(((z, x, y)) => state[z][x][y])
     |> List.for_all((el) => el == Some(p));
-  let checkWinnerInAllPairs = (p) => allPairs |> List.exists(checkWinner(p));
-  switch (checkWinnerInAllPairs(P1), checkWinnerInAllPairs(P2)) {
+  let isWinner = (p) => allPairs |> List.exists(checkWinner(p));
+  let findWinnerPair = (p) => allPairs |> List.find(checkWinner(p));
+  switch (isWinner(P1), isWinner(P2)) {
   | (true, true) => None
-  | (true, false) => Some(P1)
-  | (false, true) => Some(P2)
+  | (true, false) => Some((P1, allPositionsForPair(findWinnerPair(P1))))
+  | (false, true) => Some((P2, allPositionsForPair(findWinnerPair(P2))))
   | (false, false) => None
   }
 };

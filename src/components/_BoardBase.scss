@@ -5,5 +5,9 @@
   top: 60%;
   left: 55%;
   background: #f8f8f8;
-  transition: all .25s;
+  transition: transform .25s;
+
+  &--winning {
+    transition: transform 100s linear;
+  }
 }

@@ -15,6 +15,18 @@ $Bead-gap: -3px;
   }
 }
 
+@keyframes shine {
+  0% {
+    box-shadow: 0 0 $color-winning;
+  }
+  50% {
+    box-shadow: 0 0 0 5px $color-winning;
+  }
+  100% {
+    box-shadow: 0 0 $color-winning;
+  }
+}
+
 .Bead {
   position: relative;
   width: $Bead-size;
@@ -31,7 +43,7 @@ $Bead-gap: -3px;
     background: $color-bead-2;
   }
   &--winning {
-    background: $color-winning;
+    animation: shine 1s infinite;
   }
 }
 

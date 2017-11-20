@@ -31,6 +31,10 @@
 *, *::before, *::after {
   box-sizing: border-box; }
 
+::selection {
+  background: #888;
+  color: #fff; }
+
 body {
   margin: 0;
   font-family: Titillium;
@@ -254,3 +258,26 @@ body {
   position: fixed;
   top: 0;
   left: 0; }
+
+.About {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.25);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.About-content {
+  background: rgba(255, 255, 255, 0.9);
+  width: 600px;
+  padding: 50px;
+  line-height: 1.5; }
+  .About-content a {
+    color: #aaa;
+    transition: color .15s; }
+    .About-content a:hover {
+      color: #888; }

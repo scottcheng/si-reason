@@ -15,3 +15,7 @@ npm start
 # In another tab
 cd public && http-server
 ```
+
+## License
+
+MIT

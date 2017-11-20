@@ -13,7 +13,7 @@ let make = (~close, _children) => {
           <a target="_blank" href="https://en.wikipedia.org/wiki/Score_Four">
             (se("Score Four"))
           </a>
-          (se(", which is a 3D version of "))
+          (se(", or 3D "))
           <a target="_blank" href="https://en.wikipedia.org/wiki/Connect_Four">
             (se("Connect Four"))
           </a>

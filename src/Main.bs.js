@@ -7,9 +7,6 @@ import * as Si$SiReason from "./components/Si.bs.js";
 import './main.scss'
 ;
 
-import './assets/fonts/icons.woff'
-;
-
 var root = document.querySelector("#root");
 
 if (root == null) {

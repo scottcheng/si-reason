@@ -37,16 +37,16 @@ let make = () => {
   <div className="Game">
     <Sidebar
       gameState
-      rotateClockwise={_e =>dispatch(Rotate(-90))}
-      rotateCounterClockwise={_e =>dispatch(Rotate(90))}
-      reset={_e =>dispatch(Reset)}
-      openAbout={_e =>dispatch(OpenAbout)}
+      rotateClockwise={_e => dispatch(Rotate(-90))}
+      rotateCounterClockwise={_e => dispatch(Rotate(90))}
+      reset={_e => dispatch(Reset)}
+      openAbout={_e => dispatch(OpenAbout)}
     />
     <BoardView
       rotation
       board={gameState.board}
       move={((x, y)) => dispatch(Move((x, y)))}
     />
-    {showAbout ? <About close={_e =>dispatch(CloseAbout)} /> : React.null}
+    {showAbout ? <About close={_e => dispatch(CloseAbout)} /> : React.null}
   </div>;
 };

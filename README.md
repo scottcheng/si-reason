@@ -13,7 +13,7 @@ npm install
 npm start
 
 # In another tab
-cd public && http-server
+npm run serve
 ```
 
 ## License

@@ -6,3 +6,4 @@ npm-debug.log
 /lib/
 /public/bundle.js
 /public/main.css
+.vscode

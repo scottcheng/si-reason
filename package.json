@@ -13,10 +13,13 @@
     "build-re": "bsb -make-world",
     "start-re": "bsb -make-world -w",
     "clean-re": "bsb -clean-world",
+    "watch": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
     "webpack": "webpack -w",
     "build": "npm run build-scss && npm run build-re",
     "start": "npm-run-all -p watch-css start-re webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "bsrefmt --in-place */**/*.re */*.re"
   },
   "author": "Scott Cheng <me@scottcheng.com> (http://scottcheng.com/)",
   "bugs": {
@@ -26,14 +29,13 @@
   "main": "index.js",
   "keywords": [],
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "reason-react": ">=0.2.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "@reasonable/react": "git+https://github.com/ReasonableML/reason-react.git"
   },
   "devDependencies": {
-    "bs-platform": "^2.0.0",
-    "node-sass-chokidar": "0.0.3",
-    "npm-run-all": "^4.1.1",
-    "webpack": "^1.14.0"
+    "bs-platform": "^9.0.2",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.42.0"
   }
 }

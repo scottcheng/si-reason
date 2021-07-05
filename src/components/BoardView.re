@@ -48,7 +48,7 @@ let make = (~rotation, ~board, ~move) => {
     );
   React.useEffect0(() => {
     let rec onAnimationFrame = () => {
-      dispatch(UpdateColumnPositions)->ignore;
+      ignore(dispatch(UpdateColumnPositions));
       requestAnimationFrame(onAnimationFrame);
     };
     requestAnimationFrame(onAnimationFrame);

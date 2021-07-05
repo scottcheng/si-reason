@@ -1,5 +1,5 @@
 /* Module called BoardView to avoid conflicting filename with the board logic module */
-[@bs.val] external requestAnimationFrame: (unit => unit) => unit;
+[@bs.val] external requestAnimationFrame: (unit => unit) => unit ="requestAnimationFrame";
 
 [@bs.val]
 external getElementById: string => Dom.element = "document.getElementById";

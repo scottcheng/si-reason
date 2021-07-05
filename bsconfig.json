@@ -1,14 +1,20 @@
-
 {
-  "name" : "si-reason",
-  "reason" : {"react-jsx" : 3},
-  "bsc-flags": ["-bs-super-errors"],
-  "bs-dependencies": [ "@reasonable/react"],
+  "name": "si-reason",
+  "reason": { "react-jsx": 3 },
+  "bsc-flags": [ "-bs-super-errors" ],
+  "bs-dependencies": [ "@reasonable/react" ],
   "sources": [
     {
       "dir": "src",
-      "subdirs": ["components"]
+      "subdirs": [ "components" ]
     }
   ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
   "namespace": true
 }

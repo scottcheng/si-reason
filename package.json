@@ -8,18 +8,19 @@
     "url": "git+https://github.com/scottcheng/si-reason.git"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar src/ -o public/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o public/ --watch --recursive",
+    "bundle": "esbuild ./src/Index.bs.js --outfile=dist/js/bundle.js --bundle --sourcemap --target=chrome58,firefox57,safari11,edge16 --define:process.env.NODE_ENV='\"development\"'",
+    "build-css": "esbuild ./src/Main.bs.js --outfile=public/bundle.js --sourcemap --target=chrome58,firefox57,safari11,edge16 --define:process.env.NODE_ENV='\"development\"'",
     "build-re": "bsb -make-world",
     "start-re": "bsb -make-world -w",
     "clean-re": "bsb -clean-world",
     "watch": "bsb -make-world -w",
     "clean": "bsb -clean-world",
     "webpack": "webpack -w",
-    "build": "npm run build-scss && npm run build-re",
-    "start": "npm-run-all -p watch-css start-re webpack",
+    "serve": "webpack serve",
+    "build": "npm run build-css && npm run build-re",
+    "start": "npm-run-all -p build-css start-re webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-        "format": "bsrefmt --in-place */**/*.re */*.re"
+    "format": "bsrefmt --in-place */**/*.re */*.re"
   },
   "author": "Scott Cheng <me@scottcheng.com> (http://scottcheng.com/)",
   "bugs": {
@@ -29,13 +30,24 @@
   "main": "index.js",
   "keywords": [],
   "dependencies": {
+    "@reasonable/react": "git+https://github.com/ReasonableML/reason-react.git",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "@reasonable/react": "git+https://github.com/ReasonableML/reason-react.git"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "bs-platform": "^9.0.2",
+    "css-loader": "^5.2.6",
+    "esbuild": "^0.12.14",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.1.0",
+    "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
-    "webpack": "^5.42.0"
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
